@@ -1,5 +1,6 @@
 import express from "express";
 import { notFoundHandler, errorHandler } from "./middleware/errorHandler.js";
+import { apiRouter } from "./routes";
 
 export const app = express();
 
@@ -14,7 +15,7 @@ app.use("/health", (_req, res) => {
 
 //  Bring back after creating the folders
 
-// api.use("/api", apiRouter);
+app.use("/api", apiRouter);
 
 // app.get("/docs.json", (_req, res) => {
 //   res.json(openApiDocument);
