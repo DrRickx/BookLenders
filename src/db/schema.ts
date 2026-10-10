@@ -1,3 +1,4 @@
+import { datetime } from "drizzle-orm/mssql-core";
 import {
   integer,
   pgEnum,
@@ -38,7 +39,7 @@ export const books = pgTable("books", {
   title: varchar("name", { length: 100 }).notNull(),
   author: varchar("author", { length: 100 }).notNull(),
   isbn: varchar("isbn", { length: 13 }).notNull().unique(),
-  publishedDate: timestamp("published_date").notNull(),
+  publishedDate: datetime("published_date").notNull(),
   copiesTotal: integer("copies_total").notNull().default(1),
   copiesAvailable: integer("copies_available").notNull().default(1),
   createdAt: timestamp("created_at").notNull().defaultNow(),

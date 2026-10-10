@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import { UnauthorizedError } from "../utils/error";
+import { ForbiddenError, UnauthorizedError } from "../utils/error";
 import { env } from "../config/env";
 import jwt from "jsonwebtoken";
 import type { Role } from "../db/schema.js";
@@ -27,3 +27,12 @@ export const requireAuth: RequestHandler = (req, res, next) => {
 
   next();
 };
+
+export const requireRole =
+  (...roles: Role[]): RequestHandler =>
+  (req, _res, next) => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      throw new ForbiddenError();
+    }
+    next();
+  };
