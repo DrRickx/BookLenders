@@ -15,6 +15,14 @@ export const validate =
         .json({ error: "ValidationError", details: result.error.flatten() });
       return;
     }
-    req[source] = result.data;
+
+    // Express 5: req.query is a prototype getter, so plain assignment throws.
+    // Shadow it with an own property on the request instead.
+    Object.defineProperty(req, source, {
+      value: result.data,
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    });
     next();
   };

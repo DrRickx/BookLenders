@@ -6,5 +6,5 @@ import { loanRouter } from "./loan.routes";
 export const apiRouter = Router();
 
 apiRouter.use("/auth", authRouter);
-apiRouter.use("/book", bookRouter);
-apiRouter.use("/loan", loanRouter);
+apiRouter.use("/books", bookRouter);
+apiRouter.use("/loans", loanRouter);

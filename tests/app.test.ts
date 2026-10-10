@@ -19,7 +19,7 @@ describe("app basics", () => {
   });
 
   it("protects loan routes", async () => {
-    const res = await request(app).get("/api/loan/me");
+    const res = await request(app).get("/api/loans/me");
     expect(res.status).toBe(401);
   });
 
