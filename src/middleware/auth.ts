@@ -6,9 +6,8 @@ import type { Role } from "../db/schema.js";
 
 export const requireAuth: RequestHandler = (req, res, next) => {
   const header = req.headers.authorization;
-  if (!header?.startsWith("Bearer")) {
+  if (!header?.startsWith("Bearer "))
     throw new UnauthorizedError("Missing bearer token");
-  }
 
   try {
     const payload = jwt.verify(

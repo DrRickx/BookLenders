@@ -4,10 +4,10 @@ export class AppError extends Error {
     message: string,
     public readonly code: string = "AppError",
   ) {
-    (super(message), (this.name = code));
+    super(message); // first line, always
+    this.name = code;
   }
 }
-
 export class NotFoundError extends AppError {
   constructor(what = "Resource") {
     super(404, `${what} not found`, "NotFound");

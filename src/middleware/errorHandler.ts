@@ -9,11 +9,13 @@ export const notFoundHandler: RequestHandler = (req, res) => {
 };
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
-  if (err instanceof AppError) {
-    res.status(err.status).json({ error: err.code, message: err.message });
+  const status = typeof err?.status === "number" ? err.status : 500;
+  if (status < 500) {
+    res
+      .status(status)
+      .json({ error: err.code ?? "Error", message: err.message });
     return;
   }
-
   console.error(err);
   res
     .status(500)
