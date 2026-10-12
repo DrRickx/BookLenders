@@ -4,8 +4,6 @@ REST API for a library lending system with members, books, loans, and reservatio
 
 Tech stack: Node.js, Express, TypeScript (strict), PostgreSQL, Drizzle ORM, Zod, JWT, Swagger/OpenAPI, Vitest + Supertest, Docker, GitHub Actions.
 
-![Swagger UI](docs/swagger.png)
-
 ## Features
 
 - Member registration and login with JWT authentication.
@@ -96,14 +94,4 @@ npm test
 ├── tsconfig.json
 ├── vitest.config.ts
 ├── README.md
-└── [PLACEHOLDER: add screenshots or deployment files if needed]
 ```
-
-## What I learned / next steps
-
-- I learned how to model a small domain cleanly with a relational schema and enforce business rules in the service layer.
-- I learned how to keep validation and API documentation aligned by generating the OpenAPI contract from the same Zod schemas.
-- Next step: build the reservation workflow and reservation API.
-- Next step: add refresh tokens and stronger session rotation.
-- Next step: add rate limiting, audit logging, and production-ready monitoring.
-- Next step: tighten CI/CD and deployment automation with GitHub Actions and environment checks.
