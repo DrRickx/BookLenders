@@ -59,3 +59,61 @@ describe("/GET /api/books", async () => {
     expect(res.status).toBe(400);
   });
 });
+
+describe("/POST /api/book", async () => {
+  const validBody = {
+    title: "1984",
+    author: "George Orwell",
+    isbn: "9780451524935",
+    publishedDate: "1949-06-08T00:00:00.000Z",
+  };
+
+  it("return 401 without token", async () => {
+    const res = await request(app).post("/api/books").send(validBody);
+    expect(res.status).toBe(401);
+  });
+
+  it("returns 401 with garbage token", async () => {
+    const res = await request(app)
+      .post("/api/books")
+      .set("Authorization", "Bearer not-a-real-token")
+      .send(validBody);
+    expect(res.status).toBe(401);
+  });
+
+  it("returns 403 for a regular member", async () => {
+    const res = await request(app)
+      .post("/api/books")
+      .set("Authorization", `Bearer ${memberToken}`)
+      .send(validBody);
+    expect(res.status).toBe(403);
+  });
+
+  it("returns 400 with title missing", async () => {
+    const res = await request(app)
+      .post("/api/books")
+      .set("Authorization", `Bearer ${librarianToken}`)
+      .send({ author: "George Orwell", isbn: "9780451524935" });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe("ValidationError");
+    expect(bookService.createBook).not.toHaveBeenCalled();
+  });
+
+  it("creates a book as a librarian", async () => {
+    vi.mocked(bookService.createBook).mockResolvedValue(sampleBook);
+
+    const res = await request(app)
+      .post("/api/books")
+      .set("Authorization", `Bearer ${librarianToken}`)
+      .send(validBody);
+
+    console.log(res.body); // temporary
+
+    expect(res.status).toBe(201);
+    expect(res.body.title).toBe("1984");
+    expect(bookService.createBook).toHaveBeenCalledWith({
+      ...validBody,
+      copiesTotal: 1,
+    });
+  });
+});
