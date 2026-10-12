@@ -28,7 +28,7 @@ export type ListBooksQuery = z.infer<typeof listBooksQuerySchema>;
 export const bookResponseSchema = z.object({
   id: z.string(),
   title: z.string(),
-  author: z.string,
+  author: z.string(),
   isbn: z.string(),
   copiesTotal: z.number().int(),
   copiesAvailable: z.number().int(),

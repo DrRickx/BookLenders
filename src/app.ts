@@ -1,6 +1,8 @@
 import express from "express";
 import { notFoundHandler, errorHandler } from "./middleware/errorHandler.js";
 import { apiRouter } from "./routes";
+import { openApiDocument } from "./docs/openApi.js";
+import swaggerUi from "swagger-ui-express";
 
 export const app = express();
 
@@ -17,11 +19,11 @@ app.use("/health", (_req, res) => {
 
 app.use("/api", apiRouter);
 
-// app.get("/docs.json", (_req, res) => {
-//   res.json(openApiDocument);
-// });
+app.get("/docs.json", (_req, res) => {
+  res.json(openApiDocument);
+});
 
-// app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
 app.use(notFoundHandler);
 app.use(errorHandler);
