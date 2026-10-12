@@ -9,7 +9,7 @@ export function calculateDue(borrowedAt: Date, days = LOAN_PERIOD_DAYS): Date {
 }
 
 export function calculateOverdueFees(dueAt: Date, returnedAt: Date): number {
-  if (dueAt <= returnedAt) return 0;
+  if (returnedAt <= dueAt) return 0; // on time (or exactly on the due date): no fee
   const daysLate = Math.ceil(
     (returnedAt.getTime() - dueAt.getTime()) / MS_PER_DAY,
   );

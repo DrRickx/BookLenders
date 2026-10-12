@@ -107,8 +107,6 @@ describe("/POST /api/book", async () => {
       .set("Authorization", `Bearer ${librarianToken}`)
       .send(validBody);
 
-    console.log(res.body); // temporary
-
     expect(res.status).toBe(201);
     expect(res.body.title).toBe("1984");
     expect(bookService.createBook).toHaveBeenCalledWith({
